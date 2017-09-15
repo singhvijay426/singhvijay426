@@ -1,0 +1,490 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DAL;
+using ClassLibrary;
+using WebshreeCommonLibrary;
+using System.Data;
+using System.Data.Common;
+using Microsoft.Practices.EnterpriseLibrary.Data;
+
+namespace DAL
+{
+
+    public class dlUser
+    {
+        //
+        // Code for creating BLL object and getting Database connection
+        //
+
+        CLUser obj;
+        Database db = ConnectDb.GetDatabase();
+
+        //
+        // Method for Insert Category
+        //
+
+        public TransportationPacket insertUser(TransportationPacket packet)
+        {
+            try
+            {
+                Object ReturnValue;
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@FirstName", DbType.String, obj.FirstName);
+                db.AddInParameter(cmd, "@LastName", DbType.String, obj.LastName);
+                db.AddInParameter(cmd, "@MobileNo", DbType.String, obj.MobileNo);
+                db.AddInParameter(cmd, "@Gender", DbType.String, obj.Gender);
+                db.AddInParameter(cmd, "@ReferralCode", DbType.String, obj.ReferralCode);
+                db.AddInParameter(cmd, "@GuessPrice", DbType.Int32, obj.GuessPrice);
+                db.AddInParameter(cmd, "@DOB", DbType.DateTime, obj.DOB);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Guid, obj.CreatedBy);
+                db.AddInParameter(cmd, "@Active", DbType.Boolean, obj.Active);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 1);
+                ReturnValue = db.ExecuteScalar(cmd);
+                if (ReturnValue != null && ReturnValue != DBNull.Value)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                    packet.MessageResultset = ReturnValue;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        //public TransportationPacket insertUser(TransportationPacket packet) 
+        //{
+        //    try
+        //    {
+        //        obj = (CLUser)packet.MessagePacket;
+        //        DbCommand cmd = db.GetStoredProcCommand("spUser");
+        //        db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+        //        db.AddInParameter(cmd, "@FirstName", DbType.String, obj.FirstName);
+        //        db.AddInParameter(cmd, "@LastName", DbType.String, obj.LastName);
+        //        db.AddInParameter(cmd, "@MobileNo", DbType.String, obj.MobileNo);
+        //        db.AddInParameter(cmd, "@Gender", DbType.String, obj.Gender);
+        //        db.AddInParameter(cmd, "@ReferralCode", DbType.String, obj.ReferralCode);
+        //        db.AddInParameter(cmd, "@DOB", DbType.DateTime, obj.DOB);
+        //        db.AddInParameter(cmd, "@CreatedBy", DbType.Guid, obj.CreatedBy);
+        //        db.AddInParameter(cmd, "@Active", DbType.Boolean, obj.Active);
+        //        db.AddInParameter(cmd, "@Action", DbType.Int32, 1);
+        //        int RetunValue = db.ExecuteNonQuery(cmd);
+        //        if (RetunValue > 0)
+        //        {
+        //            packet.MessageStatus = EStatus.Success;
+        //        }
+        //        else
+        //        {
+        //            packet.MessageStatus = EStatus.Failure;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        packet.MessageStatus = EStatus.Exception;
+        //         HandleExceptions.ExceptionLogging(ex, "", true);
+        //    }
+        //    return packet;
+        //}
+
+        //
+        // Method for Update Category
+        //
+
+        public TransportationPacket updateUserDetails(TransportationPacket packet)
+        {
+            try
+            {
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@FirstName", DbType.String, obj.FirstName);
+                db.AddInParameter(cmd, "@LastName", DbType.String, obj.LastName);
+                db.AddInParameter(cmd, "@MobileNo", DbType.String, obj.MobileNo);
+                db.AddInParameter(cmd, "@Gender", DbType.String, obj.Gender);
+                db.AddInParameter(cmd, "@DOB", DbType.DateTime, obj.DOB);
+
+                db.AddInParameter(cmd, "@ModifiedBy", DbType.Guid, obj.ModifiedBy);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 2);
+
+
+                //db.AddInParameter(cmd, "@LandlineNo", DbType.String, obj.LandlineNo);
+                //db.AddInParameter(cmd, "@CountryId", DbType.String, obj.CountryId);
+                //db.AddInParameter(cmd, "@StateId", DbType.String, obj.StateId);
+                //db.AddInParameter(cmd, "@City", DbType.Guid, obj.City);
+                //db.AddInParameter(cmd, "@PinCode", DbType.Guid, obj.PinCode);
+                int ReturnValue = db.ExecuteNonQuery(cmd);
+                if (ReturnValue > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        //
+        // Method for Delete Category
+        //
+
+        public TransportationPacket deleteUser(TransportationPacket packet)
+        {
+            try
+            {
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@Ids", DbType.String, obj.Ids);
+                //db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 3);
+                int ReturnValue = db.ExecuteNonQuery(cmd);
+                if (ReturnValue > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        //
+        // Method for Select Category
+        //
+
+
+        public TransportationPacket getEmailId(TransportationPacket packet)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@Action", DbType.Int32,10);
+                ds = (DataSet)db.ExecuteDataSet(cmd);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+                packet.MessageResultset = (DataSet)ds;
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        public TransportationPacket getUser(TransportationPacket packet)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@Active", DbType.Boolean, obj.Active);
+                db.AddInParameter(cmd, "@SearchText", DbType.String, obj.SearchText);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 4);
+                ds = (DataSet)db.ExecuteDataSet(cmd);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+                packet.MessageResultset = (DataSet)ds;
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        public TransportationPacket getNewUser(TransportationPacket packet)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@Active", DbType.Boolean, obj.Active);
+                db.AddInParameter(cmd, "@SearchText", DbType.String, obj.SearchText);
+                db.AddInParameter(cmd, "@SearchDatefrom", DbType.DateTime, obj.SearchDatefrom);
+                db.AddInParameter(cmd, "@SearchDateTo", DbType.DateTime, obj.SearchDateTo);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 11);
+                ds = (DataSet)db.ExecuteDataSet(cmd);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+                packet.MessageResultset = (DataSet)ds;
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+
+        public TransportationPacket getNewUserMore(TransportationPacket packet)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@Active", DbType.Boolean, obj.Active);
+                db.AddInParameter(cmd, "@SearchText", DbType.String, obj.SearchText);
+                db.AddInParameter(cmd, "@SearchDatefrom", DbType.DateTime, obj.SearchDatefrom);
+                db.AddInParameter(cmd, "@SearchDateTo", DbType.DateTime, obj.SearchDateTo);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 12);
+                ds = (DataSet)db.ExecuteDataSet(cmd);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+                packet.MessageResultset = (DataSet)ds;
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        public TransportationPacket ReturnUserId(TransportationPacket packet)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@Id", DbType.Int32, obj.Id);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 9);
+                ds = (DataSet)db.ExecuteDataSet(cmd);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+                packet.MessageResultset = (DataSet)ds;
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        public TransportationPacket getIsMobileAvailable(TransportationPacket packet)
+        {
+            try
+            {
+                object RetunValue;
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                //db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@MobileNo", DbType.String, obj.MobileNo);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 5);
+                int Results;
+                RetunValue = db.ExecuteScalar(cmd);
+                if (RetunValue != null && RetunValue != DBNull.Value)
+                {
+
+                    if (Int32.TryParse(RetunValue.ToString(), out Results))
+                    {
+                        if (Results == 0)
+                        {
+                            packet.MessageStatus = EStatus.Success;
+                        }
+                        else
+                        {
+                            packet.MessageStatus = EStatus.Failure;
+                        }
+                    }
+                    else
+                    {
+                        packet.MessageStatus = EStatus.Failure;
+                    }
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        public TransportationPacket updateMobile(TransportationPacket packet)
+        {
+            try
+            {
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@MobileNo", DbType.String, obj.MobileNo);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 6);
+                int ReturnValue = db.ExecuteNonQuery(cmd);
+                if (ReturnValue > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+
+        public TransportationPacket activeinactive(TransportationPacket packet)
+        {
+            try
+            {
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@Ids", DbType.String, obj.Ids);
+                db.AddInParameter(cmd, "@Active", DbType.Boolean, obj.Active);
+                db.AddInParameter(cmd, "@DeletedBy", DbType.Guid, obj.DeletedBy);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 7);
+                int ReturnValue = db.ExecuteNonQuery(cmd);
+                if (ReturnValue > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                packet.MessageResultset = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+
+        public TransportationPacket UpdateUserMarriageAnniversaryDateDetails(TransportationPacket packet)
+        {
+            try
+            {
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spUser");
+                db.AddInParameter(cmd, "@UserId", DbType.Guid, obj.UserId);
+                db.AddInParameter(cmd, "@MarriageAnniversaryDate", DbType.DateTime, obj.MarriageAnniversaryDate);
+                db.AddInParameter(cmd, "@ModifiedBy", DbType.Guid, obj.ModifiedBy);
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 8);
+                int ReturnValue = db.ExecuteNonQuery(cmd);
+                if (ReturnValue > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+        public TransportationPacket GetCount(TransportationPacket packet)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                obj = (CLUser)packet.MessagePacket;
+                DbCommand cmd = db.GetStoredProcCommand("spGuessPrice");
+                db.AddInParameter(cmd, "@Action", DbType.Int32, 4);
+                ds = (DataSet)db.ExecuteDataSet(cmd);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    packet.MessageStatus = EStatus.Success;
+                }
+                else
+                {
+                    packet.MessageStatus = EStatus.Failure;
+                }
+                packet.MessageResultset = (DataSet)ds;
+            }
+            catch (Exception ex)
+            {
+                packet.MessageStatus = EStatus.Exception;
+                HandleExceptions.ExceptionLogging(ex, "", true);
+            }
+            return packet;
+        }
+
+
+
+
+    }
+}
