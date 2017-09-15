@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassLibrary
+{
+    public class CLProduct
+    {
+
+
+        public int Id { get; set; }
+        public string ProductId { get; set; }
+        public string SKUCode { get; set; }
+        public int? BrandId { get; set; }
+        public decimal ReviewAvg { get; set; }
+        public int CountReview { get; set; }
+        public string BrandName { get; set; }
+        public string Name { get; set; }
+        public string IdealFor { get; set; }
+        public bool? IsInWarranty { get; set; }
+        public string Warranty { get; set; }
+        public decimal? MRP { get; set; }
+        public decimal? DiscountInPercentage { get; set; }
+        public decimal? AffectedMRP { get; set; }
+        public string Description { get; set; }
+        public int? SortId { get; set; }
+        public bool? Active { get; set; }
+        public Guid CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public Guid ModifiedBy { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public Guid DeletedBy { get; set; }
+        public DateTime DeletedDate { get; set; }
+        public string URL { get; set; }
+
+
+        public string Image { get; set; }
+
+        public string ProductUniqueName { get; set; }
+
+        public int? ProductUniqueCode { get; set; }
+
+        public int? CategoryId { get; set; }
+
+        public string SearchText { get; set; }
+        public string ProductIds { get; set; }
+        public string BrandIds { get; set; }
+        public string PoundIds { get; set; }
+        public bool? IsDiscount { get; set; }
+        public string Color { get; set; }
+        public int? MinValue { get; set; }
+        public int? MaxValue { get; set; }
+        public int? OrderBy { get; set; }
+
+        public int Top { get; set; }
+        public int? ProductTagId { get; set; }
+        public int AvailableQuantity { get; set; }
+    }
+
+    public class PriceRange
+    {
+        public int MinValue { get; set; }
+        public int MaxValue { get; set; }
+        public int? BrandId { get; set; }
+        public string BrandIds { get; set; }
+        public int? CategoryId { get; set; }
+        public bool? Active { get; set; }
+        public int? ProductTagId { get; set; }
+    }
+
+    public class ColorRange
+    {
+        public string Color { get; set; }
+        public int? BrandId { get; set; }
+        public string BrandIds { get; set; }
+        public int? CategoryId { get; set; }
+        public bool? Active { get; set; }
+        public int? ProductTagId { get; set; }
+
+
+        public string ColorCount { get; set; }
+    }
+
+    public class IdealForRange
+    {
+        public string IdealFor { get; set; }
+        public string BrandIds { get; set; }
+        public int? CategoryId { get; set; }
+        public bool? Active { get; set; }
+        public int? ProductTagId { get; set; }
+
+
+        public string ColorCount { get; set; }
+    }
+    public class Typehead
+    {
+        public string SearchTerm { get; set; }
+        public string URL { get; set; }
+        public string InSection { get; set; }
+        public string SearchText { get; set; }
+        public bool? Active { get; set; }
+        public string Type { get; set; }
+
+
+    }
+
+
+    public class BrandRange
+    {
+        public string Brand { get; set; }
+        public int? BrandId { get; set; }
+        public string BrandIds { get; set; }
+        //===========================code for getting ideal for in product range
+        public string IdealFor { get; set; }
+        public int? CategoryId { get; set; }
+        public bool? Active { get; set; }
+        public int? ProductTagId { get; set; }
+
+        public string BrandCount { get; set; }
+    }
+
+    public class PoundRange
+    {
+        public string Pound { get; set; }
+        public int? PoundId { get; set; }
+        public string PoundIds { get; set; }
+        //===========================code for getting ideal for in product range
+        public string IdealFor { get; set; }
+        public int? CategoryId { get; set; }
+        public bool? Active { get; set; }
+        public int? ProductTagId { get; set; }
+
+        public string PoundCount { get; set; }
+    }
+
+}
