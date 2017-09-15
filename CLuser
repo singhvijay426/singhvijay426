@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassLibrary
+{
+    public class CLUser
+    {
+        public int? Id { get; set; }
+        public System.Guid? UserId { get; set; }
+        public int GuessPrice { get; set; }
+        public int RegisteredCustomer { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string LandlineNo { get; set; }
+        public string MobileNo { get; set; }
+        public string EmailId { get; set; }
+        public string Gender { get; set; }
+        public string Ids { get; set; }
+        public DateTime? DOB { get; set; }
+        public DateTime? MarriageAnniversaryDate { get; set; }
+        public string MAD { get; set; }
+        public string DOB1 { get; set; }
+        public Nullable<int> CountryId { get; set; }
+        public Nullable<int> StateId { get; set; }
+        public string City { get; set; }
+        public string PinCode { get; set; }
+        public Nullable<bool> Active { get; set; }
+        public Nullable<System.Guid> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.Guid> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<System.Guid> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedDate { get; set; }
+
+        public string SearchText { get; set; }
+
+        public string Password { get; set; }
+        public bool Status { get; set; }
+        public string ReferralCode { get; set; }
+        public DateTime? SearchDatefrom { get; set; }
+        public DateTime? SearchDateTo { get; set; }
+    }
+}
