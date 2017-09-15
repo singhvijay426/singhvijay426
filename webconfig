@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  
+  
+  <connectionStrings>
+    <clear/>
+    <add name="ConnectionString" connectionString="Data Source=103.25.128.25,2499;Initial Catalog=housedbraj;User ID=raj.db.123;Password=b#215raj" providerName="System.Data.SqlClient"/>
+    <add name="Excel03ConString"
+       connectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};&#xD;&#xA; Extended Properties='Excel 8.0;HDR={1}'"
+         />
+    <add name="Excel07ConString"
+         connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};&#xD;&#xA; Extended Properties='Excel 8.0;HDR={1}'"        
+         />
+  </connectionStrings>
+  
+  
+  <appSettings>
+
+    <add key="AppDatabaseName" value="ConnectionString"/>
+    <add key="RememberMeDays" value="30"/>
+    
+    <!--  For Folder Setting Start -->
+    <add key="FolderPath"  value="/Developer/" />
+    <!--  For Folder Setting End -->
+    <add key="ProjectName" value="HOB-"/>
+    <!--  For URL Setting Start -->
+    
+    <add key="SuccessURL" value="~/success.aspx"/>
+    <add key="FailedURL" value="~/failed.aspx"/>
+    <add key="ShippingAmount" value="50"/>
+    <add key="CODAmount" value="40"/>
+    <add key="DiscountInPercentageFromWallet" value="10"/>
+    <add key="ShippingUpToAmount" value="399"/>
+    <add key="DeliveryInBusinessDays" value="2-5"/>
+    <add key="ProductReplacementDays" value="30"/>    
+    
+    <!--  For URL Setting End -->
+
+    
+    
+    <!-- For Payment Option start -->
+    <add key="Merchant_ID" value="35571202798943557797"/>
+    <add key="Merchant_App_ID" value="0553"/>
+    <!--<add key="Secret_Key" value="9EeV0BTV"/>-->
+    <add key="Allowed_IP" value="*"/>
+    <add key="PG_Merchant_ID" value="95728611"/>
+    <add key="PG_Hash_Key" value="11B4F38B9B0758BF"/>
+    <add key="PG_Merchant_Console" value="https://pg-csr.pc.enstage-sas.com/pgcsr/merchant/index.jsp"/>
+    <add key="action" value="admin"/>
+    <add key="Password" value="password123"/>
+    <add key="hash_req_Sequence" value="wpay|merId|merAppId|merTxnId|merAppData|txnAmountInImpliedDecimal|txnCurrency|supportedPaymentType|hashKey"/>
+    <add key="hash_res_Sequence" value=" wpay|merId|merAppId|merTxnId|merAppData|txnAmountInImpliedDecimal|txnCurrency|wpay_txn_id|res_code|datapickup_code|hashKey"/>
+    <add key="PAYZAPP_BASE_URL" value="https://www.wibmo.com/v1/wPay/pickup "/>
+
+    <add key="Currency" value="INR"/>
+
+
+    <add key="Algorithm" value="SHA512"/>
+    <add key="ACCOUNT_ID" value="19555"/>
+    <add key="SECRET_KEY" value="28fb660574d7b022c8ab7ca5d43483c8"/>
+    <add key="PAYMENT_URL" value="https://secure.ebs.in/pg/ma/payment/request/"/>
+
+    <!-- For Payment Option end-->
+
+  </appSettings>
+
+  <system.web>
+
+
+
+
+    <httpRuntime requestPathInvalidCharacters="" requestValidationMode="2.0" maxRequestLength="10000" requestLengthDiskThreshold="4096" />
+    <pages validateRequest="false" />
+
+
+    <customErrors mode="Off"></customErrors>
+
+    <!--<customErrors mode="On" defaultRedirect="/failed.aspx">
+      <error statusCode="404" redirect="/failed.aspx" />
+      <error statusCode="500" redirect="/failed.aspx" />
+    </customErrors>-->
+
+    <compilation debug="true" targetFramework="4.0">
+      <assemblies>
+        <add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+        <add assembly="System.Web.Extensions.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+      </assemblies>
+    </compilation>
+    <sessionState timeout="60"></sessionState>
+
+    <authentication mode="Forms">
+      <forms loginUrl="~/redirector.aspx" slidingExpiration="true" timeout="100"></forms>
+    </authentication>
+
+    <membership defaultProvider="AspNetSqlMembershipProvider">
+      <providers>
+        <clear/>  
+        <add connectionStringName="ConnectionString" applicationName="http://www.houseofbrands.in/"
+             requiresUniqueEmail="true"
+             requiresQuestionAndAnswer="false"
+             passwordFormat="Hashed"
+             maxInvalidPasswordAttempts="5"
+             minRequiredPasswordLength="6"
+             minRequiredNonalphanumericCharacters="0"
+             passwordAttemptWindow="35"
+             name="AspNetSqlMembershipProvider"
+             type="System.Web.Security.SqlMembershipProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+      </providers>
+    </membership>
+
+    
+    <roleManager enabled="true">
+      <providers>
+        <clear />
+        <add connectionStringName="ConnectionString" applicationName="http://www.houseofbrands.in/"
+          name="AspNetSqlRoleProvider" type="System.Web.Security.SqlRoleProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      </providers>
+    </roleManager>
+  </system.web>
+
+
+  <system.webServer>
+  
+     <defaultDocument>
+      <files>
+        <clear/>
+      <add value="poundsstore.aspx"/>
+      </files>
+    </defaultDocument> 
+    
+        
+    <httpProtocol>
+      <customHeaders>
+        <add name="Access-Control-Allow-Origin"  value="*" />
+        <add name="Access-Control-Allow-Headers" value="Content-Type" />
+        <add name="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS" />
+        <add name="Access-Control-Max-Age" value="360"/>
+      </customHeaders>
+    </httpProtocol>
+
+    <!--<httpErrors errorMode="Custom" existingResponse="Replace">
+      <remove statusCode="404"/>
+      <remove statusCode="500"/>
+      <error statusCode="404" responseMode="ExecuteURL"     path="/failed.aspx"/>
+      <error statusCode="500" responseMode="ExecuteURL"      path="/failed.aspx"/>
+    </httpErrors>-->
+ 
+    <validation validateIntegratedModeConfiguration="false"/>
+    <handlers>
+      <add name="CaptchaImage" verb="GET" path="CaptchaImage.axd" type="MSCaptcha.CaptchaImageHandler, MSCaptcha"/>
+    </handlers>
+
+    <directoryBrowse enabled="false" />
+    
+    <security>
+      <requestFiltering allowDoubleEscaping="True" >
+        <filteringRules>
+          <filteringRule name="Block Bad UserAgent" scanUrl="false" scanQueryString="false">
+            <scanHeaders>
+              <add requestHeader="User-Agent" />
+            </scanHeaders>
+            <denyStrings>
+              <add string="Test Certificate Info" />
+            </denyStrings>
+          </filteringRule>
+        </filteringRules>
+      </requestFiltering>
+    </security>
+
+  </system.webServer>
+
+  <system.web.extensions>
+    <scripting>
+      <webServices>
+        <jsonSerialization maxJsonLength="2147483647"></jsonSerialization>
+      </webServices>
+    </scripting>
+  </system.web.extensions>
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="BasicHttpBinding_IServiceFinderQuery" />
+        <binding name="BasicHttpBinding_IPickupRegistration" />
+        <binding name="BasicHttpBinding_IWayBillGeneration" maxReceivedMessageSize="2147483647"/>
+      </basicHttpBinding>
+      <wsHttpBinding>
+        <binding name="WSHttpBinding_IServiceFinderQuery">
+          <security mode="None" />
+        </binding>
+        <binding name="WSHttpBinding_IPickupRegistration">
+          <security mode="None" />
+        </binding>
+        <binding name="WSHttpBinding_IWayBillGeneration">
+          <security mode="None" />
+        </binding>
+      </wsHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://netconnect.bluedart.com/Ver1.7/Demo/ShippingAPI/Finder/ServiceFinderQuery.svc/Basic"
+        binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IServiceFinderQuery"
+        contract="SAPIService.IServiceFinderQuery" name="BasicHttpBinding_IServiceFinderQuery" />
+
+      <endpoint address="http://netconnect.bluedart.com/Ver1.7/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc/Basic"
+        binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IPickupRegistration"
+        contract="PickupRegistrationService.IPickupRegistration" name="BasicHttpBinding_IPickupRegistration" />
+
+      <!--<endpoint address="http://netconnect.bluedart.com/Ver1.7/Demo/ShippingAPI/Pickup/PickupRegistrationService.svc"
+        binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IPickupRegistration"
+        contract="PickupRegistrationService.IPickupRegistration" name="WSHttpBinding_IPickupRegistration" />-->
+
+      <endpoint address="http://netconnect.bluedart.com/Ver1.7/Demo/ShippingAPI/WayBill/WayBillGeneration.svc/Basic"
+        binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IWayBillGeneration"
+        contract="WayBillGeneration.IWayBillGeneration" name="BasicHttpBinding_IWayBillGeneration" />
+
+      <!--<endpoint address="http://netconnect.bluedart.com/Ver1.7/Demo/ShippingAPI/WayBill/WayBillGeneration.svc"
+        binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IWayBillGeneration"
+        contract="WayBillGeneration.IWayBillGeneration" name="WSHttpBinding_IWayBillGeneration" />-->
+    </client>
+  </system.serviceModel>
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
